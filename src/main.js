@@ -52,3 +52,10 @@ const armPics=()=>pics().forEach(im=>{if(im.dataset.lb)return;im.dataset.lb='1';
 document.addEventListener('click',e=>{const im=e.target.closest('.collage img, #public-gallery img');if(im)lbOpen(im);});
 document.addEventListener('keydown',e=>{const im=e.target.closest?.('.collage img, #public-gallery img');if(im&&(e.key==='Enter'||e.key===' ')){e.preventDefault();lbOpen(im);}});
 armPics();new MutationObserver(armPics).observe(document.querySelector('#public-gallery'),{childList:true,subtree:true});
+
+// Clin d'œil de l'emblème : une fois à l'arrivée à l'écran, puis au survol
+const guy=document.querySelector('#guy');
+if(guy&&!matchMedia('(prefers-reduced-motion: reduce)').matches){let busy=false;const play=()=>{if(busy)return;busy=true;guy.classList.remove('play');void guy.offsetWidth;guy.classList.add('play');};
+ guy.addEventListener('animationend',e=>{if(e.animationName==='guy-turn'){guy.classList.remove('play');busy=false;}});
+ const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){setTimeout(play,350);io.disconnect();}},{threshold:.6});io.observe(guy);
+ guy.addEventListener('mouseenter',play);}
