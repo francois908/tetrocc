@@ -13,3 +13,14 @@ try{
 const staticGallery=[['/assets/club-groupe.jpg','Le groupe'],['/assets/quartier.jpg','Dans le quartier'],['/assets/archive-velo-v2.jpg','Archive']];
 document.querySelector('#public-gallery').innerHTML=staticGallery.map(([u,c])=>`<figure><img loading="lazy" src="${u}" alt="${c}"></figure>`).join('');
 if(db){try{const {data:photos}=await db.from('photos').select('image_url,caption').order('created_at',{ascending:false}).limit(9);if(photos?.length)document.querySelector('#public-gallery').innerHTML=photos.map(p=>`<figure><img loading="lazy" src="${escapeHtml(p.image_url)}" alt="${escapeHtml(p.caption||'Photo du club')}"><figcaption>${escapeHtml(p.caption||'')}</figcaption></figure>`).join('');const {data:settings}=await db.from('site_settings').select('contact_email,about_text').eq('id',1).maybeSingle();if(settings?.about_text)document.querySelector('.intro-copy p').textContent=settings.about_text;if(settings?.contact_email){const email=settings.contact_email;document.querySelectorAll('a[href^="mailto:"]').forEach(a=>{const subject=a.href.split('?')[1]||'';a.href=`mailto:${encodeURIComponent(email)}${subject?'?'+subject:''}`;});}}catch(e){console.warn('Photos ou réglages indisponibles',e);}}
+
+const qf=document.querySelector('#question-form');
+if(qf){const fb=document.querySelector('#question-feedback');qf.onsubmit=async e=>{e.preventDefault();const f=new FormData(qf);
+ if(f.get('website'))return;
+ const row={name:String(f.get('name')||'').trim(),email:String(f.get('email')||'').trim(),message:String(f.get('message')||'').trim()};
+ if(!row.name||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(row.email)||row.message.length<5){fb.textContent='Il manque une info : ton prénom, un courriel valide et ta question.';return;}
+ if(!db){fb.textContent='Le formulaire n’est pas disponible pour le moment.';return;}
+ const btn=qf.querySelector('button');btn.disabled=true;fb.textContent='Envoi…';
+ const {error}=await db.from('questions').insert(row);btn.disabled=false;
+ if(error){fb.textContent='Oups, l’envoi n’a pas fonctionné. Réessaie dans un instant.';console.error(error);return;}
+ qf.reset();fb.textContent='Merci ! Ta question est envoyée. On te répond par courriel.';};}
