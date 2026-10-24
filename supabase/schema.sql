@@ -4,7 +4,7 @@ create table if not exists public.admin_users (user_id uuid primary key referenc
 create table if not exists public.rides (
  id uuid primary key default gen_random_uuid(), slug text not null unique check (slug ~ '^[a-z0-9-]+$'),
  title text not null, ride_date date not null, start_time time, meeting_point text,
- distance_km numeric(7,1), pace text, difficulty text, description text,
+ distance_km numeric(7,1), pace text, pace_2 text, difficulty text, description text,
  rwgps_route_id text check (rwgps_route_id is null or rwgps_route_id ~ '^[0-9]+$'),
  image_url text, status text not null default 'draft' check(status in ('draft','published','cancelled')),
  created_at timestamptz not null default now(), updated_at timestamptz not null default now()

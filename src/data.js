@@ -14,3 +14,4 @@ export function rideUrl(ride){return `/sorties/${encodeURIComponent(ride.slug)}`
 export function routeLink(ride){return ride.rwgps_route_id?`https://ridewithgps.com/routes/${encodeURIComponent(ride.rwgps_route_id)}`:null;}
 export function routeEmbed(ride){return ride.rwgps_route_id?`https://ridewithgps.com/embeds?type=route&id=${encodeURIComponent(ride.rwgps_route_id)}&metricUnits=true&sampleGraph=true`:null;}
 export function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+export function paceLabel(r){if(r.pace&&r.pace_2)return `2 groupes : ${r.pace} et ${r.pace_2}`;return r.pace||r.pace_2||null;}
