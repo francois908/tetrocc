@@ -2,7 +2,7 @@ import './site.css';import {db,configured,rides,formatDate,routeId,escapeHtml} f
 const $=s=>document.querySelector(s);let selected=null,items=[];
 const DEFAULT_TIME='08:30';
 const DEFAULT_MEETING='M Café | 9079 Rue Hochelaga';
-const PACES=["24–26 km/h", "26–28 km/h", "28–30 km/h", "30 km/h +"];
+const PACES=["24-26 km/h", "26-28 km/h", "28-30 km/h", "30 km/h +"];
 const show=(s,on)=>$(s).classList.toggle('hidden',!on);
 const feedback=(s)=>{$('#feedback').textContent=s;};
 if(!configured){show('#setup',true);$('#setup').textContent='Mode démonstration : pour activer l’administration, configure Supabase dans les variables Vercel et exécute le script SQL fourni (voir README).';}
