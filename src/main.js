@@ -4,7 +4,7 @@ document.querySelector('#year').textContent=new Date().getFullYear();
 const toggle=document.querySelector('.menu-toggle'),nav=document.querySelector('.nav');toggle.onclick=()=>{const open=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',String(open));};nav.querySelectorAll('a').forEach(a=>a.onclick=()=>nav.classList.remove('open'));
 // Parallaxe du hero : l'image descend plus lentement que la page
 const heroImg=document.querySelector('.hero-image'),hero=document.querySelector('.hero');
-if(heroImg&&!matchMedia('(prefers-reduced-motion: reduce)').matches){let ticking=false;const move=()=>{const h=hero.offsetHeight,y=Math.min(window.scrollY,h);heroImg.style.transform=`translate3d(0,${Math.min(y*0.35,h*0.28)}px,0)`;ticking=false;};addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(move);}},{passive:true});move();}
+if(heroImg&&matchMedia('(min-width: 768px) and (hover: hover) and (prefers-reduced-motion: no-preference)').matches){let ticking=false;const move=()=>{const h=hero.offsetHeight,y=Math.min(window.scrollY,h);heroImg.style.transform=`translate3d(0,${Math.min(y*0.35,h*0.28)}px,0)`;ticking=false;};addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(move);}},{passive:true});move();}
 const today=new Date().toLocaleDateString('en-CA',{timeZone:'America/Toronto'});
 try{
  const all=await rides();const future=all.filter(r=>r.ride_date>=today&&r.status==='published').slice(0,3);
