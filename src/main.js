@@ -1,5 +1,5 @@
 import './site.css';
-import {rides,paceLabel,db,dateParts,escapeHtml,rideUrl} from './data.js';
+import {rides,paceLabel,typeTag,db,dateParts,escapeHtml,rideUrl} from './data.js';
 document.querySelector('#year').textContent=new Date().getFullYear();
 const toggle=document.querySelector('.menu-toggle'),nav=document.querySelector('.nav');toggle.onclick=()=>{const open=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',String(open));};nav.querySelectorAll('a').forEach(a=>a.onclick=()=>nav.classList.remove('open'));
 // Parallaxe du hero : l'image descend plus lentement que la page
@@ -10,7 +10,7 @@ try{
  const all=await rides();const future=all.filter(r=>r.ride_date>=today&&r.status==='published').slice(0,3);
  const shown=future.length?future:all.filter(r=>r.status==='published').slice(-3).reverse();
  if(!future.length)document.querySelector('#ride-message').textContent='Aucune sortie à venir annoncée pour le moment. Voici les dernières sorties publiées.';
- document.querySelector('#ride-grid').innerHTML=shown.length?shown.map(r=>{const d=dateParts(r.ride_date);return `<article class="ride-card"><a href="${rideUrl(r)}"><div class="ride-img"><img src="${escapeHtml(r.image_url||'/assets/club-groupe.jpg')}" alt="Sortie ${escapeHtml(r.title)}" loading="lazy"><div class="date"><small>${d.weekday}</small><strong>${d.day}</strong><em>${d.month}</em></div></div><h3>${escapeHtml(r.title)}</h3></a><p>${escapeHtml([r.start_time?`${r.start_time.slice(0,5).replace(':',' h ')}`:null,r.distance_km?`${r.distance_km} km`:null,paceLabel(r)].filter(Boolean).join(' · ')||'Détails à confirmer')}</p><a class="card-link" href="${rideUrl(r)}">Voir le parcours →</a></article>`;}).join(''):'<p>Les prochaines sorties seront annoncées ici.</p>';
+ document.querySelector('#ride-grid').innerHTML=shown.length?shown.map(r=>{const d=dateParts(r.ride_date);return `<article class="ride-card"><a href="${rideUrl(r)}"><div class="ride-img"><img src="${escapeHtml(r.image_url||'/assets/club-groupe.jpg')}" alt="Sortie ${escapeHtml(r.title)}" loading="lazy"><div class="date"><small>${d.weekday}</small><strong>${d.day}</strong><em>${d.month}</em></div>${typeTag(r)}</div><h3>${escapeHtml(r.title)}</h3></a><p>${escapeHtml([r.start_time?`${r.start_time.slice(0,5).replace(':',' h ')}`:null,r.distance_km?`${r.distance_km} km`:null,paceLabel(r)].filter(Boolean).join(' · ')||'Détails à confirmer')}</p><a class="card-link" href="${rideUrl(r)}">Voir le parcours →</a></article>`;}).join(''):'<p>Les prochaines sorties seront annoncées ici.</p>';
 }catch(e){document.querySelector('#ride-grid').innerHTML='<p>Les sorties ne sont pas disponibles pour le moment.</p>';console.error(e);}
 
 const staticGallery=[['/assets/club-groupe.jpg','Le groupe devant le M café'],['/assets/pause-route.jpg','Pause sur la route'],['/assets/peloton.jpg','En peloton dans le quartier'],['/assets/quartier.jpg','Dans le quartier']];

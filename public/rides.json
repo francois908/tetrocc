@@ -1,5 +1,50 @@
 [
- {"id":"demo-oka","slug":"oka-2027","title":"Oka","ride_date":"2027-05-15","start_time":null,"meeting_point":null,"distance_km":null,"pace":null,"difficulty":null,"description":"Direction Oka pour une sortie de groupe. Les détails de départ seront annoncés prochainement.","rwgps_route_id":"57071272","status":"published","image_url":"/assets/archive-velo-v2.jpg"},
- {"id":"demo-mascouche","slug":"mascouche-2027","title":"Mascouche","ride_date":"2027-05-24","start_time":null,"meeting_point":null,"distance_km":null,"pace":null,"difficulty":null,"description":"Une sortie vers Mascouche. Heure et point de rencontre à confirmer.","rwgps_route_id":"55340222","status":"published","image_url":"/assets/club-groupe.jpg"},
- {"id":"demo-laval","slug":"laval-est-2027","title":"Laval Est","ride_date":"2027-06-02","start_time":null,"meeting_point":null,"distance_km":null,"pace":null,"difficulty":null,"description":"Cap sur l'est de Laval. Heure et point de rencontre à confirmer.","rwgps_route_id":"55340222","status":"published","image_url":"/assets/archive-duo-v2.jpg"}
+ {
+  "id": "demo-oka",
+  "slug": "oka-2027",
+  "title": "Oka",
+  "ride_date": "2027-05-15",
+  "start_time": null,
+  "meeting_point": null,
+  "distance_km": null,
+  "pace": null,
+  "difficulty": null,
+  "description": "Direction Oka pour une sortie de groupe. Les détails de départ seront annoncés prochainement.",
+  "rwgps_route_id": "57071272",
+  "status": "published",
+  "image_url": "/assets/sorties/oka.jpg",
+  "ride_type": "route"
+ },
+ {
+  "id": "demo-mascouche",
+  "slug": "mascouche-2027",
+  "title": "Mascouche",
+  "ride_date": "2027-05-24",
+  "start_time": null,
+  "meeting_point": null,
+  "distance_km": null,
+  "pace": null,
+  "difficulty": null,
+  "description": "Une sortie vers Mascouche. Heure et point de rencontre à confirmer.",
+  "rwgps_route_id": "55340222",
+  "status": "published",
+  "image_url": "/assets/sorties/mascouche.jpg",
+  "ride_type": "gravel"
+ },
+ {
+  "id": "demo-laval",
+  "slug": "laval-est-2027",
+  "title": "Laval Est",
+  "ride_date": "2027-06-02",
+  "start_time": null,
+  "meeting_point": null,
+  "distance_km": null,
+  "pace": null,
+  "difficulty": null,
+  "description": "Cap sur l'est de Laval. Heure et point de rencontre à confirmer.",
+  "rwgps_route_id": "55340222",
+  "status": "published",
+  "image_url": "/assets/sorties/laval-est.jpg",
+  "ride_type": "route"
+ }
 ]

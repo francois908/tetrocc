@@ -6,7 +6,7 @@ create table if not exists public.rides (
  title text not null, ride_date date not null, start_time time, meeting_point text,
  distance_km numeric(7,1), pace text, pace_2 text, difficulty text, description text,
  rwgps_route_id text check (rwgps_route_id is null or rwgps_route_id ~ '^[0-9]+$'),
- image_url text, status text not null default 'draft' check(status in ('draft','published','cancelled')),
+ image_url text, ride_type text check (ride_type is null or ride_type in ('route','gravel','hiver','fatbike')), status text not null default 'draft' check(status in ('draft','published','cancelled')),
  created_at timestamptz not null default now(), updated_at timestamptz not null default now()
 );
 create table if not exists public.photos (id uuid primary key default gen_random_uuid(), image_url text not null, caption text, created_at timestamptz not null default now());
@@ -36,9 +36,9 @@ create policy "public reads club photos" on storage.objects for select to anon,a
 create policy "admins delete club photos" on storage.objects for delete to authenticated using(bucket_id='club-photos' and (select public.is_club_admin()));
 create policy "admins upload club photos" on storage.objects for insert to authenticated with check(bucket_id='club-photos' and (select public.is_club_admin()));
 insert into public.rides(slug,title,ride_date,description,rwgps_route_id,image_url,status) values
- ('oka-2027','Oka','2027-05-15','Direction Oka pour une sortie de groupe. Heure et point de rencontre à confirmer.','57071272','/assets/archive-velo-v2.jpg','published'),
- ('mascouche-2027','Mascouche','2027-05-24','Une sortie vers Mascouche. Heure et point de rencontre à confirmer.','55340222','/assets/club-groupe.jpg','published'),
- ('laval-est-2027','Laval Est','2027-06-02','Cap sur l’est de Laval. Heure et point de rencontre à confirmer.','55340222','/assets/archive-duo-v2.jpg','published')
+ ('oka-2027','Oka','2027-05-15','Direction Oka pour une sortie de groupe. Heure et point de rencontre à confirmer.','57071272','/assets/sorties/oka.jpg','published'),
+ ('mascouche-2027','Mascouche','2027-05-24','Une sortie vers Mascouche. Heure et point de rencontre à confirmer.','55340222','/assets/sorties/mascouche.jpg','published'),
+ ('laval-est-2027','Laval Est','2027-06-02','Cap sur l’est de Laval. Heure et point de rencontre à confirmer.','55340222','/assets/sorties/laval-est.jpg','published')
 on conflict (slug) do nothing;
 insert into public.site_settings(id,contact_email,about_text) values(1,'francois@latelierducontenu.com','Le club cycliste de l’Est de Montréal. On part de Tétreaultville, mais on roule partout : sur la route, en gravel, en ville comme en campagne. Pour le plaisir, l’entraînement et la gang.') on conflict (id) do nothing;
 -- IMPORTANT : après création du compte dans Authentication > Users, exécuter :

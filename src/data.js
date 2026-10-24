@@ -15,3 +15,5 @@ export function routeLink(ride){return ride.rwgps_route_id?`https://ridewithgps.
 export function routeEmbed(ride){return ride.rwgps_route_id?`https://ridewithgps.com/embeds?type=route&id=${encodeURIComponent(ride.rwgps_route_id)}&metricUnits=true&sampleGraph=true`:null;}
 export function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 export function paceLabel(r){if(r.pace&&r.pace_2)return `2 groupes : ${r.pace} et ${r.pace_2}`;return r.pace||r.pace_2||null;}
+export const RIDE_TYPES={route:'Route',gravel:'Gravel',hiver:'Hiver',fatbike:'Fatbike'};
+export function typeTag(r,cls='type-tag'){const l=RIDE_TYPES[r.ride_type];return l?`<span class="${cls}">${l}</span>`:'';}
