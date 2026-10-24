@@ -27,3 +27,10 @@ if(qf){const fb=document.querySelector('#question-feedback');qf.onsubmit=async e
  const {error}=await db.from('questions').insert(row);btn.disabled=false;
  if(error){fb.textContent='Oups, l’envoi n’a pas fonctionné. Réessaie dans un instant.';console.error(error);return;}
  qf.reset();fb.textContent='Merci ! Ta question est envoyée. On te répond par courriel.';};}
+
+// Titre qui « s'écrit » au défilement
+const sw=document.querySelector('.scroll-write');
+if(sw&&!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('js-write');const ws=[...sw.querySelectorAll('.w')];let t=false;
+ const upd=()=>{const r=sw.getBoundingClientRect(),vh=innerHeight,start=vh*.9,end=vh*.45;const p=Math.min(1,Math.max(0,(start-r.top)/(start-end)));
+  ws.forEach((w,i)=>{const a=Math.min(1,Math.max(0,p*ws.length-i));w.style.setProperty('--o',(.12+.88*a).toFixed(3));});t=false;};
+ addEventListener('scroll',()=>{if(!t){t=true;requestAnimationFrame(upd);}},{passive:true});addEventListener('resize',upd);upd();}
