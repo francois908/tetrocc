@@ -1,0 +1,1 @@
+{"rewrites":[{"source":"/admin","destination":"/admin.html"},{"source":"/sorties/:slug","destination":"/sortie.html"}]}

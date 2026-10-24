@@ -1,0 +1,15 @@
+import './site.css';
+import {rides,db,dateParts,escapeHtml,rideUrl} from './data.js';
+document.querySelector('#year').textContent=new Date().getFullYear();
+const toggle=document.querySelector('.menu-toggle'),nav=document.querySelector('.nav');toggle.onclick=()=>{const open=nav.classList.toggle('open');toggle.setAttribute('aria-expanded',String(open));};nav.querySelectorAll('a').forEach(a=>a.onclick=()=>nav.classList.remove('open'));
+const today=new Date().toLocaleDateString('en-CA',{timeZone:'America/Toronto'});
+try{
+ const all=await rides();const future=all.filter(r=>r.ride_date>=today&&r.status==='published').slice(0,3);
+ const shown=future.length?future:all.filter(r=>r.status==='published').slice(-3).reverse();
+ if(!future.length)document.querySelector('#ride-message').textContent='Aucune sortie à venir annoncée pour le moment. Voici les dernières sorties publiées.';
+ document.querySelector('#ride-grid').innerHTML=shown.length?shown.map(r=>{const d=dateParts(r.ride_date);return `<article class="ride-card"><a href="${rideUrl(r)}"><div class="ride-img"><img src="${escapeHtml(r.image_url||'/assets/club-groupe.jpg')}" alt="Sortie ${escapeHtml(r.title)}" loading="lazy"><div class="date"><small>${d.weekday}</small><strong>${d.day}</strong><em>${d.month}</em></div></div><h3>${escapeHtml(r.title)}</h3></a><p>${escapeHtml([r.distance_km?`${r.distance_km} km`:null,r.start_time?`${r.start_time.slice(0,5)}`:null,r.meeting_point].filter(Boolean).join(' · ')||'Détails à confirmer')}</p><a class="card-link" href="${rideUrl(r)}">Voir le parcours →</a></article>`;}).join(''):'<p>Les prochaines sorties seront annoncées ici.</p>';
+}catch(e){document.querySelector('#ride-grid').innerHTML='<p>Les sorties ne sont pas disponibles pour le moment.</p>';console.error(e);}
+
+const staticGallery=[['/assets/club-groupe.jpg','Le groupe'],['/assets/archive-duo-v2.jpg','Archive'],['/assets/archive-velo-v2.jpg','Archive']];
+document.querySelector('#public-gallery').innerHTML=staticGallery.map(([u,c])=>`<figure><img loading="lazy" src="${u}" alt="${c}"></figure>`).join('');
+if(db){try{const {data:photos}=await db.from('photos').select('image_url,caption').order('created_at',{ascending:false}).limit(9);if(photos?.length)document.querySelector('#public-gallery').innerHTML=photos.map(p=>`<figure><img loading="lazy" src="${escapeHtml(p.image_url)}" alt="${escapeHtml(p.caption||'Photo du club')}"><figcaption>${escapeHtml(p.caption||'')}</figcaption></figure>`).join('');const {data:settings}=await db.from('site_settings').select('contact_email,about_text').eq('id',1).maybeSingle();if(settings?.about_text)document.querySelector('.intro-copy p').textContent=settings.about_text;if(settings?.contact_email){const email=settings.contact_email;document.querySelectorAll('a[href^="mailto:"]').forEach(a=>{const subject=a.href.split('?')[1]||'';a.href=`mailto:${encodeURIComponent(email)}${subject?'?'+subject:''}`;});}}catch(e){console.warn('Photos ou réglages indisponibles',e);}}
