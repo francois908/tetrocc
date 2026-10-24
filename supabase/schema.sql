@@ -40,6 +40,6 @@ insert into public.rides(slug,title,ride_date,description,rwgps_route_id,image_u
  ('mascouche-2027','Mascouche','2027-05-24','Une sortie vers Mascouche. Heure et point de rencontre à confirmer.','55340222','/assets/club-groupe.jpg','published'),
  ('laval-est-2027','Laval Est','2027-06-02','Cap sur l’est de Laval. Heure et point de rencontre à confirmer.','55340222','/assets/archive-duo-v2.jpg','published')
 on conflict (slug) do nothing;
-insert into public.site_settings(id,contact_email,about_text) values(1,'francois@latelierducontenu.com','Tétreaultville, pistes, ruelles, parcs, Richelieu, réservoir, montées, café, amis. On roule pour le plaisir, l’entraînement et la communauté.') on conflict (id) do nothing;
+insert into public.site_settings(id,contact_email,about_text) values(1,'francois@latelierducontenu.com','Le club cycliste de l’Est de Montréal. On part de Tétreaultville, mais on roule partout : sur la route, en gravel, en ville comme en campagne. Pour le plaisir, l’entraînement et la gang.') on conflict (id) do nothing;
 -- IMPORTANT : après création du compte dans Authentication > Users, exécuter :
 -- insert into public.admin_users(user_id) values ('UUID_DU_COMPTE_ADMIN');
