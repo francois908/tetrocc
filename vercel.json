@@ -1,1 +1,1 @@
-{"rewrites":[{"source":"/admin","destination":"/admin.html"},{"source":"/regles","destination":"/regles.html"},{"source":"/sorties/:slug","destination":"/sortie.html"}]}
+{"rewrites":[{"source":"/admin","destination":"/admin.html"},{"source":"/regles","destination":"/regles.html"},{"source":"/confidentialite","destination":"/confidentialite.html"},{"source":"/sorties/:slug","destination":"/sortie.html"}]}
